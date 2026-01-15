@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// --- Assets Imports ---
 import bmiHome from "./assets/bmi-home.jpg";
 import bmiHistory from "./assets/bmi-history.jpg";
 
@@ -40,6 +41,62 @@ const chipPop = {
   }),
 };
 
+// --- Icons ---
+function MailIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <rect width="20" height="16" x="2" y="4" rx="2" />
+      <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+    </svg>
+  );
+}
+
+function GithubIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+      <path d="M9 18c-4.51 2-5-2-7-2" />
+    </svg>
+  );
+}
+
+function ExternalLinkIcon({ className }) {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+      <polyline points="15 3 21 3 21 9" />
+      <line x1="10" y1="14" x2="21" y2="3" />
+    </svg>
+  );
+}
+
 // --- Components ---
 
 function Tag({ children }) {
@@ -70,7 +127,36 @@ function Pill({ active, onClick, children }) {
   );
 }
 
-// New Component: Full Screen Image Modal
+function ContactCard({ icon: Icon, title, value, href, colorClass }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+      className="group relative flex items-center gap-4 overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-5 transition-all hover:border-white/20 hover:bg-white/10 md:p-6"
+    >
+      {/* Glow effect on hover */}
+      <div
+        className={`absolute -right-4 -top-4 h-24 w-24 rounded-full blur-3xl transition duration-500 group-hover:opacity-50 ${colorClass} opacity-0`}
+      />
+
+      <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-white/10 text-white transition group-hover:scale-110 group-hover:bg-white/15">
+        <Icon className="h-6 w-6" />
+      </div>
+
+      <div className="relative flex-1">
+        <h3 className="text-sm font-medium text-white/50">{title}</h3>
+        <p className="mt-1 text-base font-semibold text-white md:text-lg">
+          {value}
+        </p>
+      </div>
+
+      <ExternalLinkIcon className="relative h-5 w-5 text-white/30 transition group-hover:text-white" />
+    </a>
+  );
+}
+
+// Full Screen Image Modal
 function ImageModal({ src, onClose }) {
   // Close on Escape key
   useEffect(() => {
@@ -380,15 +466,41 @@ export default function App() {
     () => [
       {
         title: "Android",
-        chips: ["Kotlin", "Jetpack Compose", "MVVM", "Clean Architecture", "Room", "Hilt", "Firebase", "Coroutines", "Flow"],
+        chips: [
+          "Kotlin",
+          "Jetpack Compose",
+          "MVVM",
+          "Clean Architecture",
+          "Room",
+          "Hilt",
+          "Firebase",
+          "Coroutines",
+          "Flow",
+        ],
       },
       {
         title: "Web",
-        chips: ["React", "JavaScript", "HTML", "CSS", "Spring Boot", "Spring Security", "Thymeleaf", "MySQL"],
+        chips: [
+          "React",
+          "JavaScript",
+          "HTML",
+          "CSS",
+          "Spring Boot",
+          "Spring Security",
+          "Thymeleaf",
+          "MySQL",
+        ],
       },
       {
         title: "Tools",
-        chips: ["Git", "Android Studio", "IntelliJ IDEA", "VS Code", "Postman", "AWS EC2"],
+        chips: [
+          "Git",
+          "Android Studio",
+          "IntelliJ IDEA",
+          "VS Code",
+          "Postman",
+          "AWS EC2",
+        ],
       },
     ],
     []
@@ -407,7 +519,10 @@ export default function App() {
       {/* Image Modal - Rendered at root level */}
       <AnimatePresence>
         {selectedImage && (
-          <ImageModal src={selectedImage} onClose={() => setSelectedImage(null)} />
+          <ImageModal
+            src={selectedImage}
+            onClose={() => setSelectedImage(null)}
+          />
         )}
       </AnimatePresence>
 
@@ -451,6 +566,9 @@ export default function App() {
             </a>
             <a
               href="/cv.pdf"
+              download="Anas_Alhatti_CV.pdf"
+              target="_blank"
+              rel="noreferrer"
               className="rounded-xl bg-purple-500/25 px-4 py-2 text-sm font-medium text-white hover:bg-purple-500/30"
             >
               Download CV
@@ -460,26 +578,44 @@ export default function App() {
       </header>
 
       {/* Hero */}
-      <section id="top" className="mx-auto max-w-6xl px-5 pb-10 pt-12 md:pb-16 md:pt-16">
+      <section
+        id="top"
+        className="mx-auto max-w-6xl px-5 pb-10 pt-12 md:pb-16 md:pt-16"
+      >
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="show"
           className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur md:p-10"
         >
-          <p className="text-sm font-medium text-purple-200/80">Software Engineer</p>
+          <p className="text-sm font-medium text-purple-200/80">
+            Software Engineer
+          </p>
           <h1 className="mt-2 text-4xl font-semibold tracking-tight text-white md:text-5xl">
             Android Developer and Full-Stack Web
           </h1>
           <p className="mt-4 max-w-2xl text-white/75">
-              Kotlin, Jetpack Compose, MVVM, Clean Architecture, Room, Firebase,
-              plus React and Spring Boot. Focused on building clean, scalable
-              apps with strong UI and solid architecture
+            Kotlin, Jetpack Compose, MVVM, Clean Architecture, Room, Firebase,
+            plus React and Spring Boot. Focused on building clean, scalable apps
+            with strong UI and solid architecture
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
-            {["Kotlin", "Jetpack Compose", "MVVM", "Room", "React", "Spring Boot"].map((t, i) => (
-              <motion.div key={t} custom={i} variants={chipPop} initial="hidden" animate="show">
+            {[
+              "Kotlin",
+              "Jetpack Compose",
+              "MVVM",
+              "Room",
+              "React",
+              "Spring Boot",
+            ].map((t, i) => (
+              <motion.div
+                key={t}
+                custom={i}
+                variants={chipPop}
+                initial="hidden"
+                animate="show"
+              >
                 <Tag>{t}</Tag>
               </motion.div>
             ))}
@@ -511,7 +647,9 @@ export default function App() {
             whileInView="show"
             viewport={{ once: true, amount: 0.3 }}
           >
-            <h2 className="text-3xl font-semibold text-white">Featured Projects</h2>
+            <h2 className="text-3xl font-semibold text-white">
+              Featured Projects
+            </h2>
             <p className="mt-2 text-white/70">
               Filter by platform and click screenshots to view details.
             </p>
@@ -519,7 +657,11 @@ export default function App() {
 
           <div className="flex flex-wrap gap-2">
             {filters.map((f) => (
-              <Pill key={f} active={activeFilter === f} onClick={() => setActiveFilter(f)}>
+              <Pill
+                key={f}
+                active={activeFilter === f}
+                onClick={() => setActiveFilter(f)}
+              >
                 {f}
               </Pill>
             ))}
@@ -548,7 +690,9 @@ export default function App() {
           viewport={{ once: true, amount: 0.25 }}
         >
           <h2 className="text-3xl font-semibold text-white">Skills</h2>
-          <p className="mt-2 text-white/70">Tech tags animate in, without showing any numbers.</p>
+          <p className="mt-2 text-white/70">
+            Tech tags animate in, without showing any numbers.
+          </p>
         </motion.div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
@@ -582,24 +726,42 @@ export default function App() {
       </section>
 
       {/* Contact */}
-      <section id="contact" className="mx-auto max-w-6xl px-5 pb-16">
+      <section id="contact" className="mx-auto max-w-6xl px-5 pb-20">
         <motion.div
           variants={fadeUp}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.25 }}
-          className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-xl backdrop-blur md:p-10"
         >
-          <h2 className="text-2xl font-semibold text-white">Contact</h2>
+          <div className="mb-10 text-center md:text-left">
+            <h2 className="text-3xl font-semibold text-white">Let's Connect</h2>
+            <p className="mt-2 text-white/70">
+              I'm open to full-time opportunities. Feel free to reach out to
+              discuss potential projects.
+            </p>
+          </div>
 
-          <div className="mt-6 grid gap-3 text-white/80">
-            <p>Email: anasalhati@gmail.com</p>
-            <p>GitHub: github.com/AnasAlhatti</p>
+          <div className="grid gap-6 md:grid-cols-2">
+            <ContactCard
+              icon={MailIcon}
+              title="Email Me"
+              value="anasalhati@gmail.com"
+              href="mailto:anasalhati@gmail.com"
+              colorClass="bg-purple-500"
+            />
+            <ContactCard
+              icon={GithubIcon}
+              title="GitHub"
+              value="github.com/AnasAlhatti"
+              href="https://github.com/AnasAlhatti"
+              colorClass="bg-emerald-500"
+            />
           </div>
         </motion.div>
 
-        <p className="mt-8 text-center text-xs text-white/40">
-          Built with React, Tailwind, and Framer Motion.
+        <p className="mt-12 text-center text-xs text-white/30">
+          © {new Date().getFullYear()} Anas Alhatti. Built with React &
+          Tailwind.
         </p>
       </section>
     </div>
