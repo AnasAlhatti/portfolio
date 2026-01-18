@@ -492,13 +492,25 @@ export default function App() {
         ],
       },
       {
+        title: "Python & AI",
+        chips: [
+          "Python",
+          "FastAPI",
+          "Pandas",
+          "NumPy",
+          "XGBoost",
+          "PySpark",       
+          "Scikit-learn",
+          "Matplotlib",
+        ],
+      },
+      {
         title: "Tools",
         chips: [
           "Git",
           "Android Studio",
           "IntelliJ IDEA",
           "VS Code",
-          "Postman",
           "AWS EC2",
         ],
       },
@@ -595,9 +607,9 @@ export default function App() {
             Android Developer and Full-Stack Web
           </h1>
           <p className="mt-4 max-w-2xl text-white/75">
-            Kotlin, Jetpack Compose, MVVM, Clean Architecture, Room, Firebase,
-            plus React and Spring Boot. Focused on building clean, scalable apps
-            with strong UI and solid architecture
+            Specializing in Android (Kotlin/Compose) and Full-Stack Web.
+            Experienced with Spring Boot and <strong>Python (FastAPI & AI)</strong>.
+            Focused on building scalable apps with strong UI and clean architecture.
           </p>
 
           <div className="mt-6 flex flex-wrap gap-2">
