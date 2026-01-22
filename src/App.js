@@ -702,9 +702,6 @@ export default function App() {
           viewport={{ once: true, amount: 0.25 }}
         >
           <h2 className="text-3xl font-semibold text-white">Skills</h2>
-          <p className="mt-2 text-white/70">
-            Tech tags animate in, without showing any numbers.
-          </p>
         </motion.div>
 
         <div className="mt-8 grid gap-6 md:grid-cols-3">
