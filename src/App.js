@@ -26,6 +26,16 @@ import shDoctorPrescription from "./assets/doctor-prescription.png";
 import shPatientBooking from "./assets/patient-booking.png";
 import shPatientHistory from "./assets/patient-history.png";
 
+// --- Matte AI Imports ---
+import matteChat from "./assets/matte/Chat.png";
+import matteRag from "./assets/matte/Rag.png";
+import matteAgentCreation from "./assets/matte/Agent Creation.png";
+import matteAgentChat from "./assets/matte/Agent Chat.png";
+import matteFlow from "./assets/matte/LangFlow.png";
+import matteApiKeys from "./assets/matte/Api Keys.png";
+import matteCreateAccount from "./assets/matte/Create Account.png";
+import matteEmailSignIn from "./assets/matte/Email only sign in.png";
+
 // --- Animations ---
 const fadeUp = {
   hidden: { opacity: 0, y: 14 },
@@ -156,16 +166,39 @@ function ContactCard({ icon: Icon, title, value, href, colorClass }) {
   );
 }
 
-// Full Screen Image Modal
-function ImageModal({ src, onClose }) {
-  // Close on Escape key
+// Full Screen Image Modal with Swipe & Keyboard Support
+function ImageModal({ screenshots, initialIndex, onClose }) {
+  const [currentIndex, setCurrentIndex] = useState(initialIndex);
+
+  const handleNext = (e) => {
+    if (e) e.stopPropagation();
+    setCurrentIndex((prev) => (prev + 1) % screenshots.length);
+  };
+
+  const handlePrev = (e) => {
+    if (e) e.stopPropagation();
+    setCurrentIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
+  };
+
+  // Keyboard navigation & Close on Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === "Escape") onClose();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "ArrowLeft") handlePrev();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [onClose, screenshots.length]);
+
+  // Swipe gesture detection
+  const handleDragEnd = (e, { offset }) => {
+    const swipeThreshold = 50;
+    if (offset.x < -swipeThreshold) handleNext(); // Swiped left -> next
+    else if (offset.x > swipeThreshold) handlePrev(); // Swiped right -> prev
+  };
+
+  const currentImage = screenshots[currentIndex];
 
   return (
     <motion.div
@@ -173,41 +206,68 @@ function ImageModal({ src, onClose }) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-black/95 p-4 backdrop-blur-md"
       onClick={onClose} // Click backdrop to close
     >
       {/* Close Button */}
       <button
         onClick={onClose}
-        className="absolute right-6 top-6 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+        className="absolute right-4 top-4 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 md:right-8 md:top-8"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <line x1="18" y1="6" x2="6" y2="18"></line>
-          <line x1="6" y1="6" x2="18" y2="18"></line>
-        </svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
       </button>
 
-      {/* Image Container */}
-      <motion.img
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        exit={{ scale: 0.9, opacity: 0 }}
-        transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        src={src}
-        alt="Full view"
-        className="max-h-[90vh] max-w-full rounded-lg object-contain shadow-2xl"
-        onClick={(e) => e.stopPropagation()} // Prevent clicking image from closing
-      />
+      {/* Prev Button */}
+      {screenshots.length > 1 && (
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 md:left-8"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+      )}
+
+      {/* Next Button */}
+      {screenshots.length > 1 && (
+        <button
+          onClick={handleNext}
+          className="absolute right-4 z-50 rounded-full bg-white/10 p-3 text-white transition hover:bg-white/20 md:right-8"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+      )}
+
+      {/* Draggable Image Container */}
+      <div 
+        className="relative flex max-h-full max-w-full flex-col items-center justify-center overflow-hidden" 
+        onClick={(e) => e.stopPropagation()} // Prevent clicking image from closing modal
+      >
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.2 }}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }} // Rubber-band effect
+            dragElastic={0.7}
+            onDragEnd={handleDragEnd}
+            src={currentImage.src}
+            alt={currentImage.label}
+            className="max-h-[80vh] max-w-full cursor-grab rounded-lg object-contain shadow-2xl active:cursor-grabbing"
+            draggable="false" // Prevent default browser image ghost dragging
+          />
+        </AnimatePresence>
+        
+        {/* Caption & Counter */}
+        <div className="mt-5 text-center">
+          <p className="text-lg font-medium text-white">{currentImage.label}</p>
+          <p className="mt-1 text-sm text-white/50">
+            {currentIndex + 1} / {screenshots.length}
+          </p>
+        </div>
+      </div>
     </motion.div>
   );
 }
@@ -274,10 +334,10 @@ function ProjectCard({ project, onImageClick }) {
       </div>
 
       {project.features?.length ? (
-        <ul className="mt-5 grid gap-2 text-white/70 md:grid-cols-2">
+        <ul className="mt-5 columns-1 gap-x-6 text-white/70 md:columns-2">
           {project.features.map((f) => (
-            <li key={f} className="flex items-start gap-2">
-              <span className="mt-1 inline-block h-1.5 w-1.5 rounded-full bg-purple-300/80" />
+            <li key={f} className="mb-3 flex break-inside-avoid items-start gap-2">
+              <span className="mt-1.5 inline-block h-1.5 w-1.5 shrink-0 rounded-full bg-purple-300/80" />
               <span className="min-w-0">{f}</span>
             </li>
           ))}
@@ -288,11 +348,11 @@ function ProjectCard({ project, onImageClick }) {
         <div className="mt-6">
           <h4 className="text-sm font-semibold text-white/80">Screenshots</h4>
           <div className="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {project.screenshots.map((s) => (
+            {project.screenshots.map((s, index) => (
               <motion.figure
                 key={s.label}
                 whileHover={{ y: -4 }}
-                onClick={() => onImageClick(s.src)} // Add click handler
+                onClick={() => onImageClick(project.screenshots, index)} 
                 className="group relative aspect-video cursor-zoom-in overflow-hidden rounded-2xl border border-white/10 bg-black/20"
               >
                 <img
@@ -317,7 +377,7 @@ function ProjectCard({ project, onImageClick }) {
 export default function App() {
   const [activeFilter, setActiveFilter] = useState("All");
   const [scrolled, setScrolled] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null); // State for modal
+  const [modalData, setModalData] = useState(null); // State for modal: { screenshots, index }
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -329,91 +389,38 @@ export default function App() {
   const projects = useMemo(
     () => [
       {
-        id: "finance",
-        title: "FinanceApp",
-        type: "Android",
-        github: "https://github.com/AnasAlhatti/Financeapp",
+        id: "matte",
+        title: "Matte AI",
+        type: "Web",
+        github: "https://github.com/AnasAlhatti/Matte",
+        demo: "https://matte-ai.vercel.app",
         description:
-          "Personal finance app with modular structure. Track income and expenses, manage budgets, visualize reports, switch currencies, and export or import CSV.",
+          "A comprehensive multi-agent orchestration and web-based AI platform. Provides a unified interface for interacting with LLMs, managing document-based knowledge, and visually constructing autonomous workflows.",
         tags: [
-          "Kotlin",
-          "Jetpack Compose",
-          "MVVM",
-          "Clean Architecture",
-          "Room",
-          "DataStore",
-          "Hilt",
-          "Coroutines",
-          "Flow",
+          "Next.js",
+          "React",
+          "Python",
+          "FastAPI",
+          "MySQL",
+          "Langflow",
+          "AWS EC2"
         ],
         features: [
-          "Transactions: add, edit, delete income and expenses",
-          "Budgets with live progress tracking",
-          "Reports with charts and filters",
-          "Multi-currency support and compact money formatting",
-          "Receipt scanning placeholder flow",
-          "CSV export and import",
-          "Login and navigation drawer",
+          "Standard Multimodal Chat with direct PDF and image attachments",
+          "Retrieval-Augmented Generation (RAG) Studio for persistent knowledge grounding",
+          "Autonomous Agent Builder connected to external tools",
+          "Visual Flow Orchestration via embedded Langflow DAG canvas",
+          "Secure backend handling API keys with Base64 master key encryption"
         ],
         screenshots: [
-          { src: financeTransactions, label: "Transactions" },
-          { src: financeReports, label: "Reports" },
-          { src: financeBudgets, label: "Budgets" },
-          { src: financeSettings, label: "Settings" },
-          { src: financeLogin, label: "Login" },
-          { src: financeMenu, label: "Navigation Drawer" },
-        ],
-      },
-      {
-        id: "book",
-        title: "BookManager",
-        type: "Android",
-        github: "https://github.com/AnasAlhatti/Book-Manager",
-        description:
-          "Reading list manager. Add books, track progress with live bars, search and filter, and optionally sign in to sync.",
-        tags: [
-          "Kotlin",
-          "MVVM",
-          "Room",
-          "Firebase Auth",
-          "Firestore",
-          "Coroutines",
-          "Flow",
-          "Material UI",
-          "DataStore",
-        ],
-        features: [
-          "Email, Google sign in, and guest mode",
-          "Create, edit, delete books",
-          "Progress tracking and auto complete at 100%",
-          "Search and filter",
-          "Room persistence",
-          "Optional Firestore sync",
-        ],
-        screenshots: [
-          { src: bookLogin, label: "Login" },
-          { src: bookCreateAccount, label: "Create Account" },
-          { src: bookHome, label: "Home" },
-          { src: bookAddEdit, label: "Add or Edit" },
-        ],
-      },
-      {
-        id: "bmi",
-        title: "BMI Calculator",
-        type: "Android",
-        github: "https://github.com/AnasAlhatti/BMI-Calculator",
-        description:
-          "BMI calculator built with Kotlin and Jetpack Compose with unit switching and history tracking.",
-        tags: ["Kotlin", "Jetpack Compose", "State", "Android Studio"],
-        features: [
-          "BMI calculation from weight and height",
-          "Metric and imperial units",
-          "History tracking",
-          "Modern Compose UI",
-        ],
-        screenshots: [
-          { src: bmiHome, label: "Home" },
-          { src: bmiHistory, label: "History" },
+          { src: matteChat, label: "Multimodal Chat" },
+          { src: matteRag, label: "RAG Studio" },
+          { src: matteAgentCreation, label: "Agent Creation" },
+          { src: matteAgentChat, label: "Agent Testing" },
+          { src: matteFlow, label: "Visual Flow Builder" },
+          { src: matteApiKeys, label: "API Keys Management" },
+          { src: matteCreateAccount, label: "Create Account" },
+          { src: matteEmailSignIn, label: "Passwordless Sign-in" },
         ],
       },
       {
@@ -451,6 +458,97 @@ export default function App() {
           { src: shAdminDashboard, label: "Admin Dashboard" },
         ],
       },
+      {
+        id: "finance",
+        title: "FinanceApp",
+        type: "Android",
+        github: "https://github.com/AnasAlhatti/Financeapp",
+        demo: null,
+        description:
+          "Personal finance app with modular structure. Track income and expenses, manage budgets, visualize reports, switch currencies, and export or import CSV.",
+        tags: [
+          "Kotlin",
+          "Jetpack Compose",
+          "MVVM",
+          "Clean Architecture",
+          "Room",
+          "DataStore",
+          "Hilt",
+          "Coroutines",
+          "Flow",
+        ],
+        features: [
+          "Transactions: add, edit, delete income and expenses",
+          "Budgets with live progress tracking",
+          "Reports with charts and filters",
+          "Multi-currency support and compact money formatting",
+          "Receipt scanning placeholder flow",
+          "CSV export and import",
+          "Login and navigation drawer",
+        ],
+        screenshots: [
+          { src: financeTransactions, label: "Transactions" },
+          { src: financeReports, label: "Reports" },
+          { src: financeBudgets, label: "Budgets" },
+          { src: financeSettings, label: "Settings" },
+          { src: financeLogin, label: "Login" },
+          { src: financeMenu, label: "Navigation Drawer" },
+        ],
+      },
+      {
+        id: "book",
+        title: "BookManager",
+        type: "Android",
+        github: "https://github.com/AnasAlhatti/Book-Manager",
+        demo: null,
+        description:
+          "Reading list manager. Add books, track progress with live bars, search and filter, and optionally sign in to sync.",
+        tags: [
+          "Kotlin",
+          "MVVM",
+          "Room",
+          "Firebase Auth",
+          "Firestore",
+          "Coroutines",
+          "Flow",
+          "Material UI",
+          "DataStore",
+        ],
+        features: [
+          "Email, Google sign in, and guest mode",
+          "Create, edit, delete books",
+          "Progress tracking and auto complete at 100%",
+          "Search and filter",
+          "Room persistence",
+          "Optional Firestore sync",
+        ],
+        screenshots: [
+          { src: bookLogin, label: "Login" },
+          { src: bookCreateAccount, label: "Create Account" },
+          { src: bookHome, label: "Home" },
+          { src: bookAddEdit, label: "Add or Edit" },
+        ],
+      },
+      {
+        id: "bmi",
+        title: "BMI Calculator",
+        type: "Android",
+        github: "https://github.com/AnasAlhatti/BMI-Calculator",
+        demo: null,
+        description:
+          "BMI calculator built with Kotlin and Jetpack Compose with unit switching and history tracking.",
+        tags: ["Kotlin", "Jetpack Compose", "State", "Android Studio"],
+        features: [
+          "BMI calculation from weight and height",
+          "Metric and imperial units",
+          "History tracking",
+          "Modern Compose UI",
+        ],
+        screenshots: [
+          { src: bmiHome, label: "Home" },
+          { src: bmiHistory, label: "History" },
+        ],
+      },
     ],
     []
   );
@@ -482,6 +580,7 @@ export default function App() {
         title: "Web",
         chips: [
           "React",
+          "Next.js",
           "JavaScript",
           "HTML",
           "CSS",
@@ -499,7 +598,7 @@ export default function App() {
           "Pandas",
           "NumPy",
           "XGBoost",
-          "PySpark",       
+          "PySpark",
           "Scikit-learn",
           "Matplotlib",
         ],
@@ -512,6 +611,7 @@ export default function App() {
           "IntelliJ IDEA",
           "VS Code",
           "AWS EC2",
+          "Docker",
         ],
       },
     ],
@@ -528,12 +628,13 @@ export default function App() {
         <div className="absolute bottom-[-30%] left-[10%] h-[520px] w-[520px] rounded-full bg-indigo-500/10 blur-[110px]" />
       </div>
 
-      {/* Image Modal - Rendered at root level */}
+{/* Image Modal - Rendered at root level */}
       <AnimatePresence>
-        {selectedImage && (
+        {modalData && (
           <ImageModal
-            src={selectedImage}
-            onClose={() => setSelectedImage(null)}
+            screenshots={modalData.screenshots}
+            initialIndex={modalData.index}
+            onClose={() => setModalData(null)}
           />
         )}
       </AnimatePresence>
@@ -616,9 +717,10 @@ export default function App() {
             {[
               "Kotlin",
               "Jetpack Compose",
-              "MVVM",
-              "Room",
+              "Next.js",
               "React",
+              "Python",
+              "FastAPI",
               "Spring Boot",
             ].map((t, i) => (
               <motion.div
@@ -686,7 +788,7 @@ export default function App() {
               <ProjectCard
                 key={p.id}
                 project={p}
-                onImageClick={(src) => setSelectedImage(src)} // Pass click handler
+                onImageClick={(screenshots, index) => setModalData({ screenshots, index })}
               />
             ))}
           </AnimatePresence>
