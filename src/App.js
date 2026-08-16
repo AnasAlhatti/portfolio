@@ -189,6 +189,7 @@ function ImageModal({ screenshots, initialIndex, onClose }) {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [onClose, screenshots.length]);
 
   // Swipe gesture detection
