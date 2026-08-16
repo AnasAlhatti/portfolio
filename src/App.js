@@ -36,6 +36,8 @@ import matteApiKeys from "./assets/matte/Api Keys.png";
 import matteCreateAccount from "./assets/matte/Create Account.png";
 import matteEmailSignIn from "./assets/matte/Email only sign in.png";
 
+import cvFile from "./assets/Anas_Alhatti_CV_EN.pdf";
+
 // --- Animations ---
 const fadeUp = {
   hidden: { opacity: 0, y: 14 },
@@ -679,7 +681,7 @@ export default function App() {
               GitHub
             </a>
             <a
-              href="/cv.pdf"
+              href={cvFile}
               download="Anas_Alhatti_CV.pdf"
               target="_blank"
               rel="noreferrer"
