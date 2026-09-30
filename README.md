@@ -1,70 +1,68 @@
-# Getting Started with Create React App
+# Anas Alhatti — Portfolio
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A bilingual English/Turkish portfolio for full-stack, AI, and Android work. Built with React 19, Vite, Tailwind CSS 3, and Framer Motion. Fonts and project screenshots are served locally; no backend, analytics, or external font requests are required.
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+Use Node **22.12 or newer** and npm.
 
-### `npm start`
+```sh
+npm ci
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open the `/portfolio/` URL printed by Vite. English is the first-visit default. The EN/TR switch stores an explicit preference under `portfolio-language`; it still works when browser storage is blocked.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```sh
+npm run lint
+npm test
+npm run test:coverage
+npm run build
+npm run preview
+```
 
-### `npm test`
+`npm run dev` is an alias for `npm start`; `npm run test:watch` starts interactive testing. The production output is `dist/`.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Editing content
 
-### `npm run build`
+- `src/content/projects.js` contains stable project IDs, technical tags, repository/demo links, original screenshot imports, and the English CV.
+- `src/content/translations.js` contains matching `en` and `tr` dictionaries. Change copy in both dictionaries; keep the same object keys and array lengths. Translation tests check parity and required screenshot captions.
+- `src/i18n/LanguageContext.jsx` supplies the language provider; `src/i18n/useLanguage.js` exposes `language`, `setLanguage`, and `t(path, placeholders)` to components. Document language, title, and description update with the selected locale. English social metadata and one canonical URL are retained.
+- `src/components/` contains the page sections, shared motion, navigation, responsive images, and native screenshot dialog.
+- `src/index.css` contains the visual tokens, responsive layouts, focus styling, and reduced-motion rules.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Project names and technology names stay unchanged across languages. The downloaded CV is explicitly labelled as English. No Turkish CV is included.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+See [project content sources](docs/project-sources.md) for the READMEs supporting the engineering choices and the limits of those claims.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Images and fonts
 
-### `npm run eject`
+After adding or replacing an image in `src/assets/`, run:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```sh
+npm run assets
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This generates 640/1280px WebP variants without enlarging smaller originals, the source-set module, and the PNG social preview. Commit the generated assets alongside the original screenshots. Keep `public/social-preview.svg` as the editable preview source. Space Grotesk and Inter are bundled through Fontsource with Latin and Latin Extended subsets for Turkish characters.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Browser verification
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Build and start the production preview, then run in another terminal:
 
-## Learn More
+```sh
+npm run verify:browser
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The script uses an installed Chrome through Playwright. Set `BROWSER_CHANNEL=msedge` to use Edge, or `PORTFOLIO_URL` to change the default `http://localhost:4173/portfolio/`. It checks English and Turkish at 360, 768, and 1440 pixels, assets, navigation, disclosures, modal focus, language persistence, scroll position, and console errors. Screenshots and results are saved to ignored `artifacts/`.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```sh
+npm run audit
+```
 
-### Code Splitting
+This measures both languages with mobile Lighthouse against the running preview and saves HTML/JSON reports to `artifacts/`. Automated accessibility checks complement keyboard and visual inspection; they do not establish full WCAG compliance.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## Deployment
 
-### Analyzing the Bundle Size
+GitHub Actions runs lint, tests, and build, then uploads `dist/` to GitHub Pages on pushes to `master` (the existing remote branch), `main`, or a manual workflow run. Vite's base is `/portfolio/`; update that value, canonical/social URLs, and the workflow together if the repository path or domain changes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Development happens on a feature branch. Publishing the rebuilt portfolio is a separate step; the implementation itself does not push or deploy it.
