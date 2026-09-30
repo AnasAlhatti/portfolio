@@ -1,0 +1,422 @@
+{
+  "admin-dashboard.png": {
+    "width": 1892,
+    "height": 882,
+    "variants": [
+      {
+        "width": 640,
+        "path": "admin-dashboard-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "admin-dashboard-1280.webp"
+      }
+    ]
+  },
+  "bmi-history.jpg": {
+    "width": 955,
+    "height": 1844,
+    "variants": [
+      {
+        "width": 640,
+        "path": "bmi-history-640.webp"
+      },
+      {
+        "width": 955,
+        "path": "bmi-history-1280.webp"
+      }
+    ]
+  },
+  "bmi-home.jpg": {
+    "width": 955,
+    "height": 1808,
+    "variants": [
+      {
+        "width": 640,
+        "path": "bmi-home-640.webp"
+      },
+      {
+        "width": 955,
+        "path": "bmi-home-1280.webp"
+      }
+    ]
+  },
+  "book-add-edit.jpg": {
+    "width": 1041,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "book-add-edit-640.webp"
+      },
+      {
+        "width": 1041,
+        "path": "book-add-edit-1280.webp"
+      }
+    ]
+  },
+  "book-create-account.jpg": {
+    "width": 1055,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "book-create-account-640.webp"
+      },
+      {
+        "width": 1055,
+        "path": "book-create-account-1280.webp"
+      }
+    ]
+  },
+  "book-home.jpg": {
+    "width": 1043,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "book-home-640.webp"
+      },
+      {
+        "width": 1043,
+        "path": "book-home-1280.webp"
+      }
+    ]
+  },
+  "book-login.jpg": {
+    "width": 1062,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "book-login-640.webp"
+      },
+      {
+        "width": 1062,
+        "path": "book-login-1280.webp"
+      }
+    ]
+  },
+  "create-account.png": {
+    "width": 775,
+    "height": 661,
+    "variants": [
+      {
+        "width": 640,
+        "path": "create-account-640.webp"
+      },
+      {
+        "width": 775,
+        "path": "create-account-1280.webp"
+      }
+    ]
+  },
+  "doctor-dashboard.png": {
+    "width": 1908,
+    "height": 685,
+    "variants": [
+      {
+        "width": 640,
+        "path": "doctor-dashboard-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "doctor-dashboard-1280.webp"
+      }
+    ]
+  },
+  "doctor-prescription.png": {
+    "width": 660,
+    "height": 552,
+    "variants": [
+      {
+        "width": 640,
+        "path": "doctor-prescription-640.webp"
+      },
+      {
+        "width": 660,
+        "path": "doctor-prescription-1280.webp"
+      }
+    ]
+  },
+  "finance-budgets.png": {
+    "width": 1050,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-budgets-640.webp"
+      },
+      {
+        "width": 1050,
+        "path": "finance-budgets-1280.webp"
+      }
+    ]
+  },
+  "finance-login.png": {
+    "width": 954,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-login-640.webp"
+      },
+      {
+        "width": 954,
+        "path": "finance-login-1280.webp"
+      }
+    ]
+  },
+  "finance-menu.png": {
+    "width": 1050,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-menu-640.webp"
+      },
+      {
+        "width": 1050,
+        "path": "finance-menu-1280.webp"
+      }
+    ]
+  },
+  "finance-reports.png": {
+    "width": 1045,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-reports-640.webp"
+      },
+      {
+        "width": 1045,
+        "path": "finance-reports-1280.webp"
+      }
+    ]
+  },
+  "finance-settings.png": {
+    "width": 1066,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-settings-640.webp"
+      },
+      {
+        "width": 1066,
+        "path": "finance-settings-1280.webp"
+      }
+    ]
+  },
+  "finance-transactions.png": {
+    "width": 1054,
+    "height": 2048,
+    "variants": [
+      {
+        "width": 640,
+        "path": "finance-transactions-640.webp"
+      },
+      {
+        "width": 1054,
+        "path": "finance-transactions-1280.webp"
+      }
+    ]
+  },
+  "login.png": {
+    "width": 617,
+    "height": 537,
+    "variants": [
+      {
+        "width": 617,
+        "path": "login-640.webp"
+      },
+      {
+        "width": 617,
+        "path": "login-1280.webp"
+      }
+    ]
+  },
+  "main-page.png": {
+    "width": 1893,
+    "height": 718,
+    "variants": [
+      {
+        "width": 640,
+        "path": "main-page-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "main-page-1280.webp"
+      }
+    ]
+  },
+  "main-page2.png": {
+    "width": 1893,
+    "height": 632,
+    "variants": [
+      {
+        "width": 640,
+        "path": "main-page2-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "main-page2-1280.webp"
+      }
+    ]
+  },
+  "matte/Agent Chat.png": {
+    "width": 1898,
+    "height": 936,
+    "variants": [
+      {
+        "width": 640,
+        "path": "matte/Agent Chat-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "matte/Agent Chat-1280.webp"
+      }
+    ]
+  },
+  "matte/Agent Creation.png": {
+    "width": 1897,
+    "height": 947,
+    "variants": [
+      {
+        "width": 640,
+        "path": "matte/Agent Creation-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "matte/Agent Creation-1280.webp"
+      }
+    ]
+  },
+  "matte/Api Keys.png": {
+    "width": 627,
+    "height": 945,
+    "variants": [
+      {
+        "width": 627,
+        "path": "matte/Api Keys-640.webp"
+      },
+      {
+        "width": 627,
+        "path": "matte/Api Keys-1280.webp"
+      }
+    ]
+  },
+  "matte/Chat.png": {
+    "width": 1910,
+    "height": 945,
+    "variants": [
+      {
+        "width": 640,
+        "path": "matte/Chat-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "matte/Chat-1280.webp"
+      }
+    ]
+  },
+  "matte/Create Account.png": {
+    "width": 472,
+    "height": 837,
+    "variants": [
+      {
+        "width": 472,
+        "path": "matte/Create Account-640.webp"
+      },
+      {
+        "width": 472,
+        "path": "matte/Create Account-1280.webp"
+      }
+    ]
+  },
+  "matte/Email only sign in.png": {
+    "width": 497,
+    "height": 570,
+    "variants": [
+      {
+        "width": 497,
+        "path": "matte/Email only sign in-640.webp"
+      },
+      {
+        "width": 497,
+        "path": "matte/Email only sign in-1280.webp"
+      }
+    ]
+  },
+  "matte/LangFlow.png": {
+    "width": 1911,
+    "height": 938,
+    "variants": [
+      {
+        "width": 640,
+        "path": "matte/LangFlow-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "matte/LangFlow-1280.webp"
+      }
+    ]
+  },
+  "matte/Rag.png": {
+    "width": 1908,
+    "height": 940,
+    "variants": [
+      {
+        "width": 640,
+        "path": "matte/Rag-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "matte/Rag-1280.webp"
+      }
+    ]
+  },
+  "matte/Sign in.png": {
+    "width": 490,
+    "height": 587,
+    "variants": [
+      {
+        "width": 490,
+        "path": "matte/Sign in-640.webp"
+      },
+      {
+        "width": 490,
+        "path": "matte/Sign in-1280.webp"
+      }
+    ]
+  },
+  "patient-booking.png": {
+    "width": 1886,
+    "height": 880,
+    "variants": [
+      {
+        "width": 640,
+        "path": "patient-booking-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "patient-booking-1280.webp"
+      }
+    ]
+  },
+  "patient-history.png": {
+    "width": 1911,
+    "height": 881,
+    "variants": [
+      {
+        "width": 640,
+        "path": "patient-history-640.webp"
+      },
+      {
+        "width": 1280,
+        "path": "patient-history-1280.webp"
+      }
+    ]
+  }
+}
